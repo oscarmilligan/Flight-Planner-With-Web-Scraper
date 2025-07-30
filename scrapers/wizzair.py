@@ -19,7 +19,7 @@ with SB(uc=True, test=True,locale="en", ad_block=True) as sb:
     sb.cdp.type('fieldset[data-test="date-inputs"]',DEPARTURE_DATE)
     #sb.cdp.click(f'span[role="button" name="{DEPARTURE_DATE}"]')
     #sb.cdp.click(f'span[role="button"]')
-    sb.cdp.click(f'span[aria-label="Friday 15 August 2025"]')
-    sb.cdp.click(f'data-test="flight-search-submit"')
+    sb.cdp.click(f'span[aria-label="{DEPARTURE_DATE}"]')
+    sb.cdp.click(f'button[data-test="flight-search-submit"]')
     sb.sleep(25)
      
