@@ -88,6 +88,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 st.title("Flight Planner with Web Scraper")
+st.markdown("Use this link https://www.iban.com/country-codes to find the country from the code.")
 st.sidebar.subheader("When are you flying?")
 departure_date()
 st.sidebar.subheader("Where are you coming from?")
