@@ -69,10 +69,10 @@ if st.sidebar.button("Run Scraper"):
     
     with st.spinner(f"Searching for flights from {departure_airport} to {destination_airport}..."):
         # Call the scraper function with the selected values from the sidebar
-        result = wizzair_scraper(departure_airport, destination_airport, formatted_date)
+        scraper_result = wizzair_scraper(departure_airport, destination_airport, formatted_date)
         
-        if result:
+        if not scraper_result.empty:
             st.success("Scraper ran successfully!")
-            st.write(result)  # Display the scraper results
+            st.write(scraper_result)  # Display the scraper results
         else:
             st.warning("Scraper did not return any results.")
