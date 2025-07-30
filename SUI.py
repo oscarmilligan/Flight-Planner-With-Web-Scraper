@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import datetime
 
 df_airport_codes_unfiltered = pd.read_csv('data/airport-codes.csv')
 types_to_drop = ['closed', 'heliport', 'balloonport', 'seaplane base']
@@ -63,6 +64,21 @@ def Destination():
     Destination_airport = st.sidebar.selectbox("Select destination airport", airports)
     return Destination_airport
 
+def departure_date():
+    # Get the date object from the user's input
+    selected_date = st.sidebar.date_input(
+        "Select Departure Date", 
+        datetime.date.today() # It's good practice to provide a default value
+    )
+
+    # Format the date object into the desired string format
+    formatted_date_string = selected_date.strftime("%A %d %B %Y")
+    
+    # Display the resultx
+    st.write("Departure date:", formatted_date_string)
+    
+    return formatted_date_string
+    
 
 #streamlit configuration and page setup
 st.set_page_config(
@@ -72,6 +88,8 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 st.title("Flight Planner with Web Scraper")
+st.sidebar.subheader("When are you flying?")
+departure_date()
 st.sidebar.subheader("Where are you coming from?")
 Departure()
 st.sidebar.subheader("Where are you going to?")
