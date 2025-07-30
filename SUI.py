@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import datetime
+from scrapers.wizzair_copy import wizzair_scraper
+
 
 df_airport_codes_unfiltered = pd.read_csv('data/airport-codes.csv')
 types_to_drop = ['closed', 'heliport', 'balloonport', 'seaplane base','small_airport', 'medium_airport']
@@ -95,3 +97,20 @@ st.sidebar.subheader("Where are you coming from?")
 Departure()
 st.sidebar.subheader("Where are you going to?")
 Destination()
+
+def run_scrapper():
+    Departure_airport, destination_airport, formatted_date = Departure(), Destination(), departure_date()
+    wizzair_scraper_params = {
+        'Departure_airport': Departure_airport,
+        'Destination_airport': destination_airport,
+        'formatted_date': formatted_date
+    }
+    # Call the wizzair_scraper function with the parameters
+    return wizzair_scraper()  # This will return the result of the scraper
+
+if st.sidebar.button("Run Scraper"):
+    result = run_scrapper()
+    if result:
+        st.write("Scraper ran successfully!")
+    else:
+        st.write("Scraper did not return any results.")
