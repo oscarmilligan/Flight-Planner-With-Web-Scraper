@@ -8,7 +8,7 @@ DEPARTURE_DATE = "Friday 15 August 2025"
 with SB(uc=True, test=True,locale="en", ad_block=True) as sb:
     url= "https://www.wizzair.com/en-gb"
     sb.activate_cdp_mode(url)
-    sb.sleep(2)
+    sb.sleep(5)
     sb.cdp.click_if_visible('button#onetrust-reject-all-handler')
     if ONE_WAY:
         sb.cdp.click('input#radio-button-id-5')
@@ -21,5 +21,11 @@ with SB(uc=True, test=True,locale="en", ad_block=True) as sb:
     #sb.cdp.click(f'span[role="button"]')
     sb.cdp.click(f'span[aria-label="{DEPARTURE_DATE}"]')
     sb.cdp.click(f'button[data-test="flight-search-submit"]')
+    for window in sb.driver.window_handles:
+        sb.switch_to_window(window)
+        if "/booking/select-flight" in sb.get_current_url():
+            break
+    
+    sb.cdp.click_if_visible('button#onetrust-reject-all-handler')
     sb.sleep(25)
      
