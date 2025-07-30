@@ -3,7 +3,7 @@ import pandas as pd
 import datetime
 
 df_airport_codes_unfiltered = pd.read_csv('data/airport-codes.csv')
-types_to_drop = ['closed', 'heliport', 'balloonport', 'seaplane base']
+types_to_drop = ['closed', 'heliport', 'balloonport', 'seaplane base','small_airport', 'medium_airport']
 df_airport_codes_unfiltered = df_airport_codes_unfiltered[~df_airport_codes_unfiltered['type'].isin(types_to_drop)]
 df_airport_codes= df_airport_codes_unfiltered.drop(columns=['type','elevation_ft','gps_code','iata_code','local_code','iso_region','icao_code','coordinates'])
 df_airport_codes['continent'] = df_airport_codes['continent'].replace({'OC': 'Oceania', 'EU': 'Europe', 'AN':'Antartica', None: 'North America', 'SA': 'South America', 'AS': 'Asia', 'AF': 'Africa'})
