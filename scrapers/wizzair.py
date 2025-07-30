@@ -6,6 +6,8 @@ TO_LOC = "Prague"
 ONE_WAY = True
 DEPARTURE_DATE = "Friday 15 August 2025"
 def wizzair_scraper(Departure_airport = FROM_LOC, Destination_airport = TO_LOC, formatted_date = DEPARTURE_DATE, one_way=True):
+    if Departure_airport[:7] == "Budapest": Departure_airport = "Budapest"
+    if Destination_airport[:7] == "Budapest": Destination_airport = "Budapest"
     with SB(uc=True, test=True,locale="en", ad_block=True) as sb:
         url= "https://www.wizzair.com/en-gb"
         sb.activate_cdp_mode(url)
