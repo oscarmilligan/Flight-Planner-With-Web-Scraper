@@ -1,4 +1,5 @@
 from seleniumbase import SB
+import pandas
 
 FROM_LOC = "London Gatwick"
 TO_LOC = "Prague"
@@ -26,23 +27,26 @@ def wizzair_scraper(Departure_airport = FROM_LOC, Destination_airport = TO_LOC, 
         sb.cdp.close_active_tab()
         sb.cdp.switch_to_newest_tab()
         print("111111")
-        sb.sleep(5)
+        sb.sleep(3)
         sb.cdp.click_if_visible('button#onetrust-reject-all-handler')
         #self.cdp.select_all(selector)
         days = sb.find_elements('div[class*="flight-select__flight"][data-test*="flight-select-flight"]')
         print("Found elements")
+        flight_info = pandas.DataFrame(columns=["duration","land_time","depart_time","price"])
         for day in days: #doesnt actually loop yet
             if not day.text.strip():
                 continue
             print("**** " + " ".join(day.text.split("\n")[0:2]) + " ****")
             info = day.text.split()
-            length = info[-11] + info[-10]
-            print("".join(length))
-            land = info[-9]
-            depart = info[-15]
-            price = info[-4]
-            
-            return price
+            duration = info[-11] + info[-10]
+            print("".join(duration))
+            land_time = info[-9]
+            depart_time = info[-15]
+            price = float(info[-4][1:])
+            new_info=pandas.DataFrame({"duration":[duration],"land_time":[land_time],"depart_time":[depart_time],"price":[price]})
+            flight_info = pandas.concat([flight_info,new_info],ignore_index=True)
+           
+        return flight_info.drop_duplicates()
 
-if __name__ == "__main__": wizzair_scraper()
+if __name__ == "__main__": print(wizzair_scraper())
      
