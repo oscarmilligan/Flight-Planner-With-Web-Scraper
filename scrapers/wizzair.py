@@ -1,1 +1,25 @@
-import seleniumbase
+from seleniumbase import SB
+
+FROM_LOC = "London Gatwick"
+TO_LOC = "Prague"
+ONE_WAY = True
+DEPARTURE_DATE = "Friday 15 August 2025"
+
+with SB(uc=True, test=True,locale="en", ad_block=True) as sb:
+    url= "https://www.wizzair.com/en-gb"
+    sb.activate_cdp_mode(url)
+    sb.sleep(2)
+    sb.cdp.click_if_visible('button#onetrust-reject-all-handler')
+    if ONE_WAY:
+        sb.cdp.click('input#radio-button-id-5')
+    sb.cdp.type('input#wa-autocomplete-input-7',FROM_LOC)
+    sb.cdp.click(f'div[role="option"]')
+    sb.cdp.type('input#wa-autocomplete-input-9',TO_LOC)
+    sb.cdp.click(f'div[role="option"]')
+    sb.cdp.type('fieldset[data-test="date-inputs"]',DEPARTURE_DATE)
+    #sb.cdp.click(f'span[role="button" name="{DEPARTURE_DATE}"]')
+    #sb.cdp.click(f'span[role="button"]')
+    sb.cdp.click(f'span[aria-label="Friday 15 August 2025"]')
+    sb.cdp.click(f'data-test="flight-search-submit"')
+    sb.sleep(25)
+     
