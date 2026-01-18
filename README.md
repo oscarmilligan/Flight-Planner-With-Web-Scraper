@@ -1,4 +1,5 @@
 # Flight-Planner-With-Web-Scraper
+COMPLETELY UNFINISHED
 Flight Planner With Web Scraper
 Google Chrome required
 
